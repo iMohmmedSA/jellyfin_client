@@ -1,3 +1,6 @@
+pub mod client;
+pub mod error;
+
 pub(crate) mod headers {
     pub const AUTHORIZATION: &str = "Authorization";
     pub const CLIENT: &str = "Client";
