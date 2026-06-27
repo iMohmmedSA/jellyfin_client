@@ -11,9 +11,6 @@ pub enum Error {
     #[error("URL parsing error: {0}")]
     UrlParse(#[from] url::ParseError),
 
-    #[error("Invalid header value: {0}")]
-    InvalidHeaderValue(#[from] reqwest::header::InvalidHeaderValue),
-
     #[error("API error (status {status}): {message}")]
     Api {
         status: reqwest::StatusCode,

@@ -11,6 +11,7 @@ use std::sync::Arc;
 use crate::{
     client::inner::Inner,
     error::{Error, Result},
+    headers::AUTHORIZATION,
 };
 
 #[derive(Debug, Clone)]
@@ -51,7 +52,7 @@ impl Client {
             req = req.query(&query);
         }
 
-        // TODO: add token header
+        req = req.header(AUTHORIZATION, &*self.inner.auth().await);
 
         if let Some(body) = body {
             req = req.json(&body);
