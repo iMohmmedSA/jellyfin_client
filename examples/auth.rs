@@ -1,4 +1,4 @@
-use jellyfin_client::client::Client;
+use jellyfin_client::{api::users::authenticate::Credentials, client::Client};
 use url::Url;
 
 #[tokio::main]
@@ -13,5 +13,6 @@ async fn main() {
     )
     .unwrap();
 
-    println!("{:?}", client.public_info().await);
+    let login = Credentials::new("Username", "Password");
+    println!("{:#?}", client.authenticate(login).await);
 }
