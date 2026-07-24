@@ -1,4 +1,4 @@
-use jellyfin_client::client::Client;
+use jellyfin_client::Client;
 use url::Url;
 
 #[tokio::main]

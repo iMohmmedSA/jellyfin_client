@@ -1,4 +1,4 @@
-use jellyfin_client::{api::users::authenticate::Credentials, client::Client};
+use jellyfin_client::{Client, api::users::authenticate::Credentials};
 use url::Url;
 
 #[tokio::main]

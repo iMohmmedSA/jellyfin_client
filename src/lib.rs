@@ -3,6 +3,8 @@ pub mod client;
 pub mod error;
 pub mod models;
 
+pub use client::Client;
+
 pub(crate) mod headers {
     pub const AUTHORIZATION: &str = "Authorization";
     pub const CLIENT: &str = "Client";
