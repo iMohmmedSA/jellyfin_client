@@ -3,7 +3,10 @@ pub mod client;
 pub mod error;
 pub mod models;
 
+pub(crate) mod serde_util;
+
 pub use client::Client;
+pub use error::Error;
 
 pub(crate) mod headers {
     pub const AUTHORIZATION: &str = "Authorization";
