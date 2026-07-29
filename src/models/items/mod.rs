@@ -4,4 +4,4 @@ pub mod media;
 pub mod person;
 pub mod query_enums;
 
-pub use item::Item;
+pub use item::{Item, UserData};

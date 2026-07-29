@@ -4,11 +4,12 @@ use crate::{
     Client,
     error::Result,
     models::{
+        PaginatedResult,
         items::{
+            Item,
             enums::{ItemKind, MediaType},
             query_enums::{ImageType, ItemFields},
         },
-        user_items::Resume,
     },
 };
 
@@ -38,7 +39,10 @@ pub struct ResumeItemsQuery {
 }
 
 impl Client {
-    pub async fn get_resume_items(&self, query: Option<ResumeItemsQuery>) -> Result<Resume> {
+    pub async fn get_resume_items(
+        &self,
+        query: Option<ResumeItemsQuery>,
+    ) -> Result<PaginatedResult<Item>> {
         self.get("UserItems/Resume", query).await
     }
 }
