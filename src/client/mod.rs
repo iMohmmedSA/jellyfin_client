@@ -1,7 +1,8 @@
 pub mod inner;
 
+use bytes::Bytes;
 use reqwest::{
-    Method,
+    Method, Response,
     header::{ACCEPT, HeaderMap, HeaderValue},
 };
 use serde::{Serialize, de::DeserializeOwned};
@@ -137,6 +138,41 @@ impl Client {
         B: Serialize,
         Q: Serialize,
     {
+        Ok(self.send(method, path, body, query).await?.json().await?)
+    }
+
+    pub(crate) async fn get_bytes<Q>(&self, path: &str, query: Option<Q>) -> Result<Bytes>
+    where
+        Q: Serialize,
+    {
+        Ok(self
+            .send(Method::GET, path, None::<()>, query)
+            .await?
+            .bytes()
+            .await?)
+    }
+
+    pub(crate) fn build_url<Q: Serialize>(&self, path: &str, query: Option<&Q>) -> Result<Url> {
+        let mut url = self.inner.base.join(path)?;
+
+        if let Some(query) = query {
+            url.set_query(Some(&serde_urlencoded::to_string(query)?));
+        }
+
+        Ok(url)
+    }
+
+    async fn send<B, Q>(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<B>,
+        query: Option<Q>,
+    ) -> Result<Response>
+    where
+        B: Serialize,
+        Q: Serialize,
+    {
         let url = self.inner.base.join(path)?;
 
         let mut req = self.inner.reqwest.request(method, url);
@@ -162,6 +198,6 @@ impl Client {
             return Err(Error::Api { status, message });
         }
 
-        Ok(res.json().await?)
+        Ok(res)
     }
 }

@@ -69,3 +69,23 @@ pub enum ImageType {
     BoxRear,
     Profile,
 }
+
+impl std::fmt::Display for ImageType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let s = serde_json::to_value(self)
+            .ok()
+            .and_then(|v| v.as_str().map(str::to_owned))
+            .expect("ImageType should serialize to a plain string");
+        write!(f, "{s}")
+    }
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub enum ImageFormat {
+    Bmp,
+    Gif,
+    Jpg,
+    Png,
+    Webp,
+    Svg,
+}

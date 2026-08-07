@@ -11,6 +11,9 @@ pub enum Error {
     #[error("URL parsing error: {0}")]
     UrlParse(#[from] url::ParseError),
 
+    #[error("URL query encoding error: {0}")]
+    QueryEncode(#[from] serde_urlencoded::ser::Error),
+
     #[error("API error (status {status}): {message}")]
     Api {
         status: reqwest::StatusCode,
