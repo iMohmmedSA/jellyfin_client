@@ -1,4 +1,5 @@
 pub mod items;
+pub mod shows;
 pub mod system;
 pub mod user_items;
 pub mod user_views;
